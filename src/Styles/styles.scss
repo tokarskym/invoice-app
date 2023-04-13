@@ -1,0 +1,73 @@
+$darkPurple: #7c5dfa;
+$lightPurple: #9277ff;
+
+@mixin center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// general styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+}
+
+// navbar styles
+.navigation-bar {
+  width: 100%;
+  height: 72px;
+  background-color: #1e2139;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-switch {
+      margin-right: 19px;
+    }
+  }
+  &__avatar {
+    width: 72px;
+    height: 72px;
+    border-left: 1px solid #979797;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+  }
+  &__logo {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    background-color: $darkPurple;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    &-img {
+      z-index: 1;
+      @include center-absolute;
+    }
+    &-bottom {
+      width: 72px;
+      height: 36px;
+      background-color: $lightPurple;
+      position: absolute;
+      bottom: 0;
+      border-top-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+  }
+}
