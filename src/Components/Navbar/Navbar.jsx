@@ -2,6 +2,7 @@ import Avatar from '../../Images/image-avatar.jpg';
 import MoonIcon from '../../Images/icon-moon.svg';
 import Logo from '../../Images/logo.svg';
 import SunIcon from '../../Images/icon-sun.svg';
+
 import { useContext } from 'react';
 import { ThemeContext } from '../../Context/Theme';
 
@@ -18,7 +19,7 @@ export default function Navbar() {
           <img src={isDarkMode ? SunIcon : MoonIcon} alt={isDarkMode ? 'Moon Icon' : 'Sun Icon'} />
         </button>
         <div className="navigation-bar__avatar">
-          <img className="navigation-bar__avatar-img" src={Avatar} alt="" />
+          <img className="navigation-bar__avatar-img" src={Avatar} alt="avatar of the user" />
         </div>
       </div>
     </nav>

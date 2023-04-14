@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap');
+
 $darkPurple: #7c5dfa;
 $lightPurple: #9277ff;
 
@@ -8,7 +10,13 @@ $lightPurple: #9277ff;
   transform: translate(-50%, -50%);
 }
 
-// general styles
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// GENERAL STYLES
 * {
   box-sizing: border-box;
   margin: 0;
@@ -20,7 +28,54 @@ button {
   border: none;
 }
 
-// navbar styles
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:visited {
+  color: none;
+}
+
+a:active {
+  color: none;
+}
+
+body {
+  background-color: #141625;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 0.8rem;
+  line-height: 18px;
+  letter-spacing: -0.1;
+}
+
+h1 {
+  font-size: 2.2rem;
+  line-height: 33px;
+  letter-spacing: -1;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 22px;
+  letter-spacing: -1;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 0.9rem;
+  line-height: 24px;
+  letter-spacing: -0.25;
+  font-weight: 700;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+// NAVBAR STYLES
 .navigation-bar {
   width: 100%;
   height: 72px;
@@ -29,9 +84,7 @@ button {
   justify-content: space-between;
   align-items: center;
   &__button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     &-switch {
       margin-right: 19px;
     }
@@ -40,9 +93,7 @@ button {
     width: 72px;
     height: 72px;
     border-left: 1px solid #979797;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     &-img {
       width: 32px;
       height: 32px;
@@ -69,5 +120,299 @@ button {
       border-top-left-radius: 20px;
       border-bottom-right-radius: 20px;
     }
+  }
+}
+
+//INVOICE HEADER STYLES
+.invoice-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    &-select {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 500;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+  }
+}
+
+.invoice-header__buttons-select .modal {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  border-radius: 10px;
+  background-color: #252945;
+  width: 192px;
+  height: 128px;
+  z-index: 1;
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+}
+
+.invoice-header__button {
+  width: 90px;
+  height: 44px;
+  border-radius: 24px;
+  background-color: $darkPurple;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px;
+  margin-left: 10px;
+  h3 {
+    color: #ffff;
+    margin-right: 5px;
+  }
+  &-plus {
+    width: 32px;
+    height: 32px;
+    background-color: #ffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// INVOICE ITEM IN INVOICE LIST
+.invoice-item {
+  display: grid;
+  grid-template-columns: 1fr 0.7fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'id . client'
+    'date . status'
+    'total . status';
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 16px;
+}
+
+.invoice-item__id {
+  grid-area: id;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.invoice-item__payment-due {
+  grid-area: date;
+  margin-left: 10px;
+}
+
+.invoice-item__total {
+  grid-area: total;
+  margin-left: 10px;
+}
+
+.invoice-item__client {
+  grid-area: client;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.invoice-item__status {
+  grid-area: status;
+}
+
+.invoice-item__prefix {
+  color: #7e88c3;
+}
+
+.invoice-item__id h3 {
+  display: inline-block;
+}
+
+.invoice-item__status-dot--pending,
+.invoice-item__status-dot--draft,
+.invoice-item__status-dot--paid {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.invoice-item {
+  border-radius: 6px;
+  &__wrapper {
+    width: 100%;
+  }
+  &__status {
+    width: 104px;
+    height: 40px;
+    border-radius: 6px;
+    @include flex-center;
+    gap: 5px;
+    justify-self: end;
+    margin-right: 10px;
+    h3 {
+      display: inline-block;
+      background-color: transparent;
+    }
+    &-paid {
+      background-color: rgba(51, 214, 159, 0.1);
+      color: #33d69f;
+    }
+    &-pending {
+      background-color: rgba(255, 143, 0, 0.1);
+      color: #ff8f00;
+    }
+    &-draft {
+      background-color: rgba(223, 227, 250, 0.4);
+    }
+    &-dot {
+      &--pending {
+        background-color: #ff8f00;
+      }
+      &--paid {
+        background-color: #33d69f;
+      }
+    }
+  }
+}
+
+// INVOICE DETAILS STYLES
+.invoice-details__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 91px;
+  background-color: #1e2139;
+  border-radius: 6px;
+  padding: 20px;
+  margin: 16px 0 16px 0;
+  div {
+    margin: 0;
+  }
+}
+
+.invoice-details__info {
+  background-color: #1e2139;
+  width: 100%;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'id .'
+    'adres .'
+    'date recipient'
+    'payment recipient'
+    'email .'
+    'items items'
+    'total total';
+  justify-items: start;
+  &-id,
+  &-adres,
+  &-date,
+  &-payment,
+  &-email,
+  &-recipient {
+    margin-bottom: 30px;
+  }
+  &-date p,
+  &-payment p,
+  &-email p,
+  &-recipient p:first-of-type,
+  &-recipient h3 {
+    margin-bottom: 5px;
+  }
+  &-id {
+    grid-area: id;
+  }
+  &-adres {
+    grid-area: adres;
+  }
+  &-date {
+    grid-area: date;
+  }
+  &-payment {
+    grid-area: payment;
+  }
+  &-email {
+    grid-area: email;
+  }
+  &-recipient {
+    grid-area: recipient;
+  }
+  &-items {
+    grid-area: items;
+    width: 100%;
+    background-color: #252945;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+  }
+}
+
+.invoice-details__buttons {
+  width: 100%;
+  height: 72px;
+  background-color: #1e2139;
+}
+
+.invoice-details__info-id h3 {
+  display: inline-block;
+}
+
+.invoice-details__single-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.invoice-details__info-total {
+  grid-area: total;
+  background-color: #0c0e16;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.invoice-details__buttons {
+  @include flex-center;
+  gap: 8px;
+}
+button {
+  height: 48px;
+  border-radius: 24px;
+  font-size: 0.9rem;
+  line-height: 24px;
+  letter-spacing: -0.25;
+  font-weight: 700;
+  color: #ffff;
+  &.edit-button {
+    width: 73px;
+    background-color: #252945;
+  }
+  &.delete-button {
+    width: 89px;
+    background-color: #f3ece4;
+  }
+  &.paid-button {
+    width: 149px;
+    background-color: #7c5dfa;
   }
 }

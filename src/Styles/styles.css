@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap");
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,6 +8,53 @@
 button {
   background-color: transparent;
   border: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:visited {
+  color: none;
+}
+
+a:active {
+  color: none;
+}
+
+body {
+  background-color: #141625;
+  font-family: "League Spartan", sans-serif;
+  font-size: 0.8rem;
+  line-height: 18px;
+  letter-spacing: -0.1;
+}
+
+h1 {
+  font-size: 2.2rem;
+  line-height: 33px;
+  letter-spacing: -1;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 22px;
+  letter-spacing: -1;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 0.9rem;
+  line-height: 24px;
+  letter-spacing: -0.25;
+  font-weight: 700;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
 }
 
 .navigation-bar {
@@ -61,4 +109,279 @@ button {
   bottom: 0;
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
+}
+
+.invoice-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.invoice-header__buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.invoice-header__buttons-select {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 500;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.invoice-header__buttons-select .modal {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  border-radius: 10px;
+  background-color: #252945;
+  width: 192px;
+  height: 128px;
+  z-index: 1;
+}
+.invoice-header__buttons-select .modal .modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+}
+
+.invoice-header__button {
+  width: 90px;
+  height: 44px;
+  border-radius: 24px;
+  background-color: #7c5dfa;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px;
+  margin-left: 10px;
+}
+.invoice-header__button h3 {
+  color: white;
+  margin-right: 5px;
+}
+.invoice-header__button-plus {
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.invoice-item {
+  display: grid;
+  grid-template-columns: 1fr 0.7fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "id . client" "date . status" "total . status";
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 16px;
+}
+
+.invoice-item__id {
+  grid-area: id;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.invoice-item__payment-due {
+  grid-area: date;
+  margin-left: 10px;
+}
+
+.invoice-item__total {
+  grid-area: total;
+  margin-left: 10px;
+}
+
+.invoice-item__client {
+  grid-area: client;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.invoice-item__status {
+  grid-area: status;
+}
+
+.invoice-item__prefix {
+  color: #7e88c3;
+}
+
+.invoice-item__id h3 {
+  display: inline-block;
+}
+
+.invoice-item__status-dot--pending,
+.invoice-item__status-dot--draft,
+.invoice-item__status-dot--paid {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.invoice-item {
+  border-radius: 6px;
+}
+.invoice-item__wrapper {
+  width: 100%;
+}
+.invoice-item__status {
+  width: 104px;
+  height: 40px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  justify-self: end;
+  margin-right: 10px;
+}
+.invoice-item__status h3 {
+  display: inline-block;
+  background-color: transparent;
+}
+.invoice-item__status-paid {
+  background-color: rgba(51, 214, 159, 0.1);
+  color: #33d69f;
+}
+.invoice-item__status-pending {
+  background-color: rgba(255, 143, 0, 0.1);
+  color: #ff8f00;
+}
+.invoice-item__status-draft {
+  background-color: rgba(223, 227, 250, 0.4);
+}
+.invoice-item__status-dot--pending {
+  background-color: #ff8f00;
+}
+.invoice-item__status-dot--paid {
+  background-color: #33d69f;
+}
+
+.invoice-details__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 91px;
+  background-color: #1e2139;
+  border-radius: 6px;
+  padding: 20px;
+  margin: 16px 0 16px 0;
+}
+.invoice-details__status div {
+  margin: 0;
+}
+
+.invoice-details__info {
+  background-color: #1e2139;
+  width: 100%;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "id ." "adres ." "date recipient" "payment recipient" "email ." "items items" "total total";
+  justify-items: start;
+}
+.invoice-details__info-id, .invoice-details__info-adres, .invoice-details__info-date, .invoice-details__info-payment, .invoice-details__info-email, .invoice-details__info-recipient {
+  margin-bottom: 30px;
+}
+.invoice-details__info-date p, .invoice-details__info-payment p, .invoice-details__info-email p, .invoice-details__info-recipient p:first-of-type, .invoice-details__info-recipient h3 {
+  margin-bottom: 5px;
+}
+.invoice-details__info-id {
+  grid-area: id;
+}
+.invoice-details__info-adres {
+  grid-area: adres;
+}
+.invoice-details__info-date {
+  grid-area: date;
+}
+.invoice-details__info-payment {
+  grid-area: payment;
+}
+.invoice-details__info-email {
+  grid-area: email;
+}
+.invoice-details__info-recipient {
+  grid-area: recipient;
+}
+.invoice-details__info-items {
+  grid-area: items;
+  width: 100%;
+  background-color: #252945;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+.invoice-details__buttons {
+  width: 100%;
+  height: 72px;
+  background-color: #1e2139;
+}
+
+.invoice-details__info-id h3 {
+  display: inline-block;
+}
+
+.invoice-details__single-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.invoice-details__info-total {
+  grid-area: total;
+  background-color: #0c0e16;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.invoice-details__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button {
+  height: 48px;
+  border-radius: 24px;
+  font-size: 0.9rem;
+  line-height: 24px;
+  letter-spacing: -0.25;
+  font-weight: 700;
+  color: white;
+}
+button.edit-button {
+  width: 73px;
+  background-color: #252945;
+}
+button.delete-button {
+  width: 89px;
+  background-color: #f3ece4;
+}
+button.paid-button {
+  width: 149px;
+  background-color: #7c5dfa;
 }/*# sourceMappingURL=styles.css.map */
