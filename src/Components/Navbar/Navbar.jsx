@@ -8,6 +8,7 @@ import { ThemeContext } from '../../Context/Theme';
 
 export default function Navbar() {
   const [{ isDarkMode }, toggleTheme] = useContext(ThemeContext);
+
   return (
     <nav className="navigation-bar">
       <div className="navigation-bar__logo">
@@ -19,7 +20,7 @@ export default function Navbar() {
           <img src={isDarkMode ? SunIcon : MoonIcon} alt={isDarkMode ? 'Moon Icon' : 'Sun Icon'} />
         </button>
         <div className="navigation-bar__avatar">
-          <img className="navigation-bar__avatar-img" src={Avatar} alt="avatar of the user" />
+          <img className="navigation-bar__avatar-img" src={Avatar} alt="Avatar of the user" />
         </div>
       </div>
     </nav>

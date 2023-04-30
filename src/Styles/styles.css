@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap");
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,6 +9,13 @@
 button {
   background-color: transparent;
   border: none;
+  height: 48px;
+  border-radius: 24px;
+  font-size: 0.9rem;
+  line-height: 24px;
+  letter-spacing: -0.25;
+  font-weight: 700;
+  color: white;
 }
 
 a {
@@ -23,8 +31,13 @@ a:active {
   color: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 body {
-  background-color: #141625;
   font-family: "League Spartan", sans-serif;
   font-size: 0.8rem;
   line-height: 18px;
@@ -65,14 +78,17 @@ h3 {
   justify-content: space-between;
   align-items: center;
 }
+
 .navigation-bar__button {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .navigation-bar__button-switch {
   margin-right: 19px;
 }
+
 .navigation-bar__avatar {
   width: 72px;
   height: 72px;
@@ -81,11 +97,13 @@ h3 {
   align-items: center;
   justify-content: center;
 }
+
 .navigation-bar__avatar-img {
   width: 32px;
   height: 32px;
   border-radius: 50%;
 }
+
 .navigation-bar__logo {
   position: relative;
   width: 72px;
@@ -94,6 +112,7 @@ h3 {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
+
 .navigation-bar__logo-img {
   z-index: 1;
   position: absolute;
@@ -101,6 +120,7 @@ h3 {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .navigation-bar__logo-bottom {
   width: 72px;
   height: 36px;
@@ -115,44 +135,92 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-.invoice-header__buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.invoice-header__buttons-select {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  font-size: 0.9rem;
-  cursor: pointer;
-  font-family: "League Spartan", sans-serif;
-  font-weight: 500;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  padding: 20px 0 20px 0;
 }
 
-.invoice-header__buttons-select .modal {
+.invoice-header__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  position: relative;
+}
+
+.invoice-header__buttons-select {
+  cursor: pointer;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 5px;
+}
+
+.invoice-header__buttons-select h3 {
+  font-size: 1.1rem;
+}
+
+div.modal {
   position: absolute;
   top: 50px;
   right: 50px;
-  border-radius: 10px;
-  background-color: #252945;
   width: 192px;
-  height: 128px;
+  height: auto;
+  border: 1px solid #252945;
+  border-radius: 10px;
   z-index: 1;
 }
-.invoice-header__buttons-select .modal .modal-body {
+
+div.modal div.modal-body {
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 15px;
+}
+
+div.modal div.modal-body input {
+  width: 20px;
+  height: 20px;
+}
+
+div.modal div.modal-body label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.modal-input__checkbox:before {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #7c5dfa;
+  border-radius: 2px;
+  padding: 1px;
+}
+
+.modal-input__checkbox:checked:after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 10px;
+  border: 1px solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  position: absolute;
+  left: 22px;
+}
+
+.modal-input__checkbox:checked:before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-color: #7c5dfa;
 }
 
 .invoice-header__button {
@@ -166,10 +234,12 @@ h3 {
   padding: 5px;
   margin-left: 10px;
 }
+
 .invoice-header__button h3 {
   color: white;
   margin-right: 5px;
 }
+
 .invoice-header__button-plus {
   width: 32px;
   height: 32px;
@@ -196,6 +266,10 @@ h3 {
   margin-left: 10px;
 }
 
+.invoice-item__id h3 {
+  display: inline-block;
+}
+
 .invoice-item__payment-due {
   grid-area: date;
   margin-left: 10px;
@@ -220,10 +294,6 @@ h3 {
   color: #7e88c3;
 }
 
-.invoice-item__id h3 {
-  display: inline-block;
-}
-
 .invoice-item__status-dot--pending,
 .invoice-item__status-dot--draft,
 .invoice-item__status-dot--paid {
@@ -235,9 +305,11 @@ h3 {
 .invoice-item {
   border-radius: 6px;
 }
+
 .invoice-item__wrapper {
   width: 100%;
 }
+
 .invoice-item__status {
   width: 104px;
   height: 40px;
@@ -249,24 +321,30 @@ h3 {
   justify-self: end;
   margin-right: 10px;
 }
+
 .invoice-item__status h3 {
   display: inline-block;
   background-color: transparent;
 }
+
 .invoice-item__status-paid {
   background-color: rgba(51, 214, 159, 0.1);
   color: #33d69f;
 }
+
 .invoice-item__status-pending {
   background-color: rgba(255, 143, 0, 0.1);
   color: #ff8f00;
 }
+
 .invoice-item__status-draft {
   background-color: rgba(223, 227, 250, 0.4);
 }
+
 .invoice-item__status-dot--pending {
   background-color: #ff8f00;
 }
+
 .invoice-item__status-dot--paid {
   background-color: #33d69f;
 }
@@ -277,17 +355,16 @@ h3 {
   justify-content: space-between;
   width: 100%;
   height: 91px;
-  background-color: #1e2139;
   border-radius: 6px;
   padding: 20px;
-  margin: 16px 0 16px 0;
+  margin-bottom: 16px;
 }
+
 .invoice-details__status div {
   margin: 0;
 }
 
 .invoice-details__info {
-  background-color: #1e2139;
   width: 100%;
   border-radius: 6px;
   padding: 20px;
@@ -298,34 +375,51 @@ h3 {
   grid-template-areas: "id ." "adres ." "date recipient" "payment recipient" "email ." "items items" "total total";
   justify-items: start;
 }
-.invoice-details__info-id, .invoice-details__info-adres, .invoice-details__info-date, .invoice-details__info-payment, .invoice-details__info-email, .invoice-details__info-recipient {
+
+.invoice-details__info-id,
+.invoice-details__info-adres,
+.invoice-details__info-date,
+.invoice-details__info-payment,
+.invoice-details__info-email,
+.invoice-details__info-recipient {
   margin-bottom: 30px;
 }
-.invoice-details__info-date p, .invoice-details__info-payment p, .invoice-details__info-email p, .invoice-details__info-recipient p:first-of-type, .invoice-details__info-recipient h3 {
+
+.invoice-details__info-date p,
+.invoice-details__info-payment p,
+.invoice-details__info-email p,
+.invoice-details__info-recipient p:first-of-type,
+.invoice-details__info-recipient h3 {
   margin-bottom: 5px;
 }
+
 .invoice-details__info-id {
   grid-area: id;
 }
+
 .invoice-details__info-adres {
   grid-area: adres;
 }
+
 .invoice-details__info-date {
   grid-area: date;
 }
+
 .invoice-details__info-payment {
   grid-area: payment;
 }
+
 .invoice-details__info-email {
   grid-area: email;
 }
+
 .invoice-details__info-recipient {
   grid-area: recipient;
 }
+
 .invoice-details__info-items {
   grid-area: items;
   width: 100%;
-  background-color: #252945;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
 }
@@ -333,7 +427,6 @@ h3 {
 .invoice-details__buttons {
   width: 100%;
   height: 72px;
-  background-color: #1e2139;
 }
 
 .invoice-details__info-id h3 {
@@ -349,7 +442,6 @@ h3 {
 
 .invoice-details__info-total {
   grid-area: total;
-  background-color: #0c0e16;
   padding: 20px;
   width: 100%;
   display: flex;
@@ -364,24 +456,386 @@ h3 {
   gap: 8px;
 }
 
-button {
-  height: 48px;
-  border-radius: 24px;
-  font-size: 0.9rem;
-  line-height: 24px;
-  letter-spacing: -0.25;
-  font-weight: 700;
-  color: white;
-}
 button.edit-button {
   width: 73px;
   background-color: #252945;
 }
+
 button.delete-button {
   width: 89px;
   background-color: #f3ece4;
+  color: #ffffff;
 }
+
 button.paid-button {
   width: 149px;
   background-color: #7c5dfa;
-}/*# sourceMappingURL=styles.css.map */
+}
+
+a.edit-button {
+  color: #7e88c3;
+  background-color: #f9fafe;
+  width: 73px;
+  height: 48px;
+  border-radius: 24px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.invoice-form__heading {
+  color: #7c5dfa;
+}
+
+.invoice-form label {
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.1px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.invoice-form__adress,
+.invoice-form__recipient {
+  display: flex;
+  flex-direction: column;
+}
+
+.city-postcode {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.invoice-form input,
+.invoice-form label,
+div.city-postcode,
+div.invoice-form__item-grid,
+form.invoice-form button.invoice-form_item-add {
+  max-width: 504px;
+}
+
+.invoice-form .city-postcode input,
+.invoice-form .city-postcode label {
+  max-width: 252px;
+}
+
+div.form-container {
+  display: flex;
+  justify-content: center;
+}
+
+form.invoice-form {
+  padding: 10px 0 10px 0;
+}
+
+.invoice-form input {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  height: 48px;
+  padding: 10px;
+  outline: none;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+div.invoice-form__payment-terms {
+  margin-top: 5px;
+}
+
+div.invoice-form__payment-terms div.modal-body label {
+  margin-bottom: 0;
+}
+
+div.invoice-form__payment-terms div.modal-body input {
+  margin-top: 0;
+}
+
+.invoice-form input:focus-visible {
+  border: 1px solid transparent;
+  outline: 1px solid #7c5dfa;
+  outline-offset: -2px;
+}
+
+.invoice-form input {
+  width: 100%;
+}
+
+.invoice-form__item-grid {
+  display: grid;
+  grid-template-columns: 2fr 0.75fr 1fr 1fr 0.5fr;
+  grid-template-rows: auto;
+  grid-template-areas: "name quantity price total delete";
+  -moz-column-gap: 5px;
+  column-gap: 5px;
+}
+
+.invoice-form__item-name {
+  grid-area: name;
+}
+
+.invoice-form__item-quantity {
+  grid-area: quantity;
+}
+
+.invoice-form__item-price {
+  grid-area: price;
+}
+
+.invoice-form__item-total {
+  grid-area: total;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.invoice-form__item-delete {
+  grid-area: delete;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+.invoice-form__item-add {
+  width: 100%;
+  max-width: 504px;
+  margin: 44px 0 44px 0;
+}
+
+button {
+  color: #dfe3fa;
+}
+
+button.save-button {
+  width: 114px;
+  background-color: #7c5dfa;
+}
+
+button.cancel-button {
+  width: 84px;
+}
+
+button.draft-button {
+  width: 117px;
+  background-color: #373b53;
+}
+
+.invoice-form__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 91px;
+  gap: 5px;
+}
+
+label .input-error {
+  outline: 1px solid #f3ece4;
+}
+
+p.error {
+  position: absolute;
+  right: 0;
+}
+
+.react-datepicker__triangle {
+  display: none;
+}
+
+.react-datepicker__day-names {
+  display: none;
+}
+
+button.react-datepicker__navigation span.react-datepicker__navigation-icon::before {
+  border-width: 3px 3px 0 0;
+  border-color: rgb(124, 93, 250);
+  width: 5px;
+  height: 5px;
+}
+
+div.react-datepicker__month-container div.react-datepicker__header {
+  border: none;
+  background-color: transparent;
+}
+
+div.react-datepicker__month-container div.react-datepicker__header .react-datepicker__current-month {
+  color: white;
+}
+
+button.react-datepicker__navigation--next {
+  top: 22px;
+  right: 22px;
+}
+
+button.react-datepicker__navigation--previous {
+  top: 22px;
+  left: 22px;
+}
+
+.react-datepicker__month-container {
+  padding: 20px;
+  border-radius: 8px;
+}
+
+div.react-datepicker {
+  border: none;
+  border-radius: 10px;
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: -0.25px;
+}
+
+div.react-datepicker__month-container div.react-datepicker__month div.react-datepicker__week div.react-datepicker__day:hover {
+  color: #7c5dfa;
+  background-color: transparent;
+}
+
+div.react-datepicker__month-container div.react-datepicker__month div.react-datepicker__week div.react-datepicker__day--selected {
+  color: #7c5dfa;
+  background-color: transparent;
+}
+
+div.react-datepicker__month-container div.react-datepicker__month div.react-datepicker__week div.react-datepicker__day--outside-month {
+  opacity: 0.3;
+}
+
+div.react-datepicker__month-container div.react-datepicker__month div.react-datepicker__week div.react-datepicker__day--keyboard-selected {
+  background-color: transparent;
+}
+
+.calendar-label {
+  position: relative;
+}
+
+.calendar-label img {
+  position: absolute;
+  right: 10px;
+  top: 45%;
+  width: 20px;
+  height: 20px;
+}
+
+.invoice-form__payment-terms {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 10px;
+  border: 1px solid #252945;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  position: relative;
+  border-radius: 4px;
+}
+
+.invoice-form__payment-terms div.modal {
+  width: 100%;
+  height: auto;
+  left: 0;
+  top: 48px;
+  border-radius: 3px;
+}
+
+.invoice-form__payment-terms div.modal .modal-input__checkbox:checked:after {
+  left: 6px;
+  bottom: 6px;
+}
+
+div.back-button {
+  padding: 10px 0 10px 0;
+}
+
+div.back-button button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.invoice-form__mode-display {
+  display: flex;
+  align-items: center;
+  padding: 10px 0 10px 0;
+}
+
+.invoice-form__mode-display span {
+  margin-left: 10px;
+  font-size: 1.5rem;
+}
+
+div.empty-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 70vh;
+}
+
+div.empty-message h2 {
+  margin: 60px 0 20px 0;
+}
+
+.delete-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.delete-modal__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 327px;
+  min-height: 220px;
+  max-width: 480px;
+  max-height: 249px;
+  width: 90%;
+  height: auto;
+  z-index: 9999;
+  padding: 30px;
+  box-shadow: 0px 10px 20px 0px rgba(72, 84, 159, 0.25);
+}
+
+.delete-modal__content h2 {
+  margin-bottom: 30px;
+}
+
+.delete-modal__content p {
+  margin-bottom: 30px;
+}
+
+.delete-modal__content .modal-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/*# sourceMappingURL=styles.css.map */

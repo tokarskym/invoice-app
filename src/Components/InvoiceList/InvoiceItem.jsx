@@ -1,13 +1,8 @@
-import { useContext } from 'react';
-import { ThemeContext } from '../../Context/Theme';
-
 import InvoiceStatus from './ReusableComponents/InvoiceStatus';
 
 export default function InvoiceItem({ invoice }) {
-  const [{ theme }] = useContext(ThemeContext);
-
   return (
-    <div className="invoice-item" style={{ backgroundColor: theme.invoiceItemColor }}>
+    <div className="invoice-item">
       <div className="invoice-item__id">
         <span className="invoice-item__prefix">#</span>
         <h3>{invoice.id}</h3>

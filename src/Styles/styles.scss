@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap');
 
-$darkPurple: #7c5dfa;
-$lightPurple: #9277ff;
-
 @mixin center-absolute {
   position: absolute;
   top: 50%;
@@ -26,6 +23,13 @@ $lightPurple: #9277ff;
 button {
   background-color: transparent;
   border: none;
+  height: 48px;
+  border-radius: 24px;
+  font-size: 0.9rem;
+  line-height: 24px;
+  letter-spacing: -0.25;
+  font-weight: 700;
+  color: #ffff;
 }
 
 a {
@@ -41,8 +45,13 @@ a:active {
   color: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 body {
-  background-color: #141625;
   font-family: 'League Spartan', sans-serif;
   font-size: 0.8rem;
   line-height: 18px;
@@ -104,7 +113,7 @@ h3 {
     position: relative;
     width: 72px;
     height: 72px;
-    background-color: $darkPurple;
+    background-color: #7c5dfa;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     &-img {
@@ -114,7 +123,7 @@ h3 {
     &-bottom {
       width: 72px;
       height: 36px;
-      background-color: $lightPurple;
+      background-color: #9277ff;
       position: absolute;
       bottom: 0;
       border-top-left-radius: 20px;
@@ -128,51 +137,94 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 0 20px 0;
   &__buttons {
-    display: flex;
+    @include flex-center;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
     position: relative;
     &-select {
-      background-color: transparent;
-      border: none;
-      outline: none;
-      font-size: 0.9rem;
       cursor: pointer;
-      font-family: 'League Spartan', sans-serif;
-      font-weight: 500;
       appearance: none;
       -webkit-appearance: none;
-      -moz-appearance: none;
+      width: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-right: 5px;
+      h3 {
+        font-size: 1.1rem;
+      }
     }
   }
 }
 
-.invoice-header__buttons-select .modal {
+// MODAL FOR FILTERING AND FOR PAYMENT TERMS IN INVOICE FORM
+div.modal {
   position: absolute;
   top: 50px;
   right: 50px;
-  border-radius: 10px;
-  background-color: #252945;
   width: 192px;
-  height: 128px;
+  height: auto;
+  border: 1px solid #252945;
+  border-radius: 10px;
   z-index: 1;
-  .modal-body {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
+}
+
+div.modal div.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  input {
+    width: 20px;
+    height: 20px;
   }
+  label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+}
+
+.modal-input__checkbox:before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #7c5dfa;
+  border-radius: 2px;
+  padding: 1px;
+}
+
+.modal-input__checkbox:checked:after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 10px;
+  border: 1px solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  position: absolute;
+  left: 22px;
+}
+
+.modal-input__checkbox:checked:before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background-color: #7c5dfa;
 }
 
 .invoice-header__button {
   width: 90px;
   height: 44px;
   border-radius: 24px;
-  background-color: $darkPurple;
+  background-color: #7c5dfa;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -187,9 +239,7 @@ h3 {
     height: 32px;
     background-color: #ffff;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
   }
 }
 
@@ -205,40 +255,33 @@ h3 {
   border-radius: 6px;
   padding: 10px;
   margin-bottom: 16px;
-}
-
-.invoice-item__id {
-  grid-area: id;
-  margin-bottom: 10px;
-  margin-left: 10px;
-}
-
-.invoice-item__payment-due {
-  grid-area: date;
-  margin-left: 10px;
-}
-
-.invoice-item__total {
-  grid-area: total;
-  margin-left: 10px;
-}
-
-.invoice-item__client {
-  grid-area: client;
-  text-align: right;
-  margin-right: 10px;
-}
-
-.invoice-item__status {
-  grid-area: status;
-}
-
-.invoice-item__prefix {
-  color: #7e88c3;
-}
-
-.invoice-item__id h3 {
-  display: inline-block;
+  &__id {
+    grid-area: id;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    h3 {
+      display: inline-block;
+    }
+  }
+  &__payment-due {
+    grid-area: date;
+    margin-left: 10px;
+  }
+  &__total {
+    grid-area: total;
+    margin-left: 10px;
+  }
+  &__client {
+    grid-area: client;
+    text-align: right;
+    margin-right: 10px;
+  }
+  &__status {
+    grid-area: status;
+  }
+  &__prefix {
+    color: #7e88c3;
+  }
 }
 
 .invoice-item__status-dot--pending,
@@ -295,17 +338,15 @@ h3 {
   justify-content: space-between;
   width: 100%;
   height: 91px;
-  background-color: #1e2139;
   border-radius: 6px;
   padding: 20px;
-  margin: 16px 0 16px 0;
+  margin-bottom: 16px;
   div {
     margin: 0;
   }
 }
 
 .invoice-details__info {
-  background-color: #1e2139;
   width: 100%;
   border-radius: 6px;
   padding: 20px;
@@ -358,7 +399,6 @@ h3 {
   &-items {
     grid-area: items;
     width: 100%;
-    background-color: #252945;
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
   }
@@ -367,7 +407,6 @@ h3 {
 .invoice-details__buttons {
   width: 100%;
   height: 72px;
-  background-color: #1e2139;
 }
 
 .invoice-details__info-id h3 {
@@ -383,7 +422,6 @@ h3 {
 
 .invoice-details__info-total {
   grid-area: total;
-  background-color: #0c0e16;
   padding: 20px;
   width: 100%;
   display: flex;
@@ -395,14 +433,8 @@ h3 {
   @include flex-center;
   gap: 8px;
 }
+
 button {
-  height: 48px;
-  border-radius: 24px;
-  font-size: 0.9rem;
-  line-height: 24px;
-  letter-spacing: -0.25;
-  font-weight: 700;
-  color: #ffff;
   &.edit-button {
     width: 73px;
     background-color: #252945;
@@ -410,9 +442,349 @@ button {
   &.delete-button {
     width: 89px;
     background-color: #f3ece4;
+    color: #ffffff;
   }
   &.paid-button {
     width: 149px;
     background-color: #7c5dfa;
+  }
+}
+
+a.edit-button {
+  color: #7e88c3;
+  background-color: #f9fafe;
+  width: 73px;
+  height: 48px;
+  border-radius: 24px;
+  font-size: 0.9rem;
+  @include flex-center;
+}
+
+.invoice-form__heading {
+  color: #7c5dfa;
+}
+
+.invoice-form label {
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.1px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.invoice-form__adress,
+.invoice-form__recipient {
+  display: flex;
+  flex-direction: column;
+}
+
+.city-postcode {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+//INPUT SIZES FOR MOBILE DEVICES IN INVOICE FORM
+.invoice-form input,
+.invoice-form label,
+div.city-postcode,
+div.invoice-form__item-grid,
+form.invoice-form button.invoice-form_item-add {
+  max-width: 504px;
+}
+
+.invoice-form .city-postcode input,
+.invoice-form .city-postcode label {
+  max-width: 252px;
+}
+
+div.form-container {
+  display: flex;
+  justify-content: center;
+}
+
+form.invoice-form {
+  padding: 10px 0 10px 0;
+}
+
+.invoice-form input {
+  font-family: 'League Spartan';
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  height: 48px;
+  padding: 10px;
+  outline: none;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+div.invoice-form__payment-terms {
+  margin-top: 5px;
+}
+
+div.invoice-form__payment-terms div.modal-body {
+  & label {
+    margin-bottom: 0;
+  }
+  & input {
+    margin-top: 0;
+  }
+}
+
+.invoice-form input:focus-visible {
+  border: 1px solid transparent;
+  outline: 1px solid #7c5dfa;
+  outline-offset: -2px;
+}
+
+.invoice-form input {
+  width: 100%;
+}
+
+.invoice-form__item-grid {
+  display: grid;
+  grid-template-columns: 2fr 0.75fr 1fr 1fr 0.5fr;
+  grid-template-rows: auto;
+  grid-template-areas: 'name quantity price total delete';
+  column-gap: 5px;
+}
+
+.invoice-form__item {
+  &-name {
+    grid-area: name;
+  }
+  &-quantity {
+    grid-area: quantity;
+  }
+  &-price {
+    grid-area: price;
+  }
+  &-total {
+    grid-area: total;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  &-delete {
+    grid-area: delete;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.invoice-form__item-add {
+  width: 100%;
+  max-width: 504px;
+  margin: 44px 0 44px 0;
+}
+
+button {
+  color: #dfe3fa;
+  &.save-button {
+    width: 114px;
+    background-color: #7c5dfa;
+  }
+  &.cancel-button {
+    width: 84px;
+  }
+  &.draft-button {
+    width: 117px;
+    background-color: #373b53;
+  }
+}
+
+.invoice-form__buttons {
+  @include flex-center;
+  width: 100%;
+  height: 91px;
+  gap: 5px;
+}
+
+label .input-error {
+  outline: 1px solid #f3ece4;
+}
+
+p.error {
+  position: absolute;
+  right: 0;
+}
+
+//REACT DATE PICKER CALENDAR
+.react-datepicker__triangle {
+  display: none;
+}
+
+.react-datepicker__day-names {
+  display: none;
+}
+
+button.react-datepicker__navigation span.react-datepicker__navigation-icon::before {
+  border-width: 3px 3px 0 0;
+  border-color: rgba(124, 93, 250, 1);
+  width: 5px;
+  height: 5px;
+}
+
+div.react-datepicker__month-container div.react-datepicker__header {
+  border: none;
+  background-color: transparent;
+  .react-datepicker__current-month {
+    color: white;
+  }
+}
+
+button.react-datepicker__navigation--next {
+  top: 22px;
+  right: 22px;
+}
+
+button.react-datepicker__navigation--previous {
+  top: 22px;
+  left: 22px;
+}
+
+.react-datepicker__month-container {
+  padding: 20px;
+  border-radius: 8px;
+}
+
+div.react-datepicker {
+  border: none;
+  border-radius: 10px;
+  font-family: 'League Spartan';
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: -0.25px;
+}
+
+div.react-datepicker__month-container div.react-datepicker__month div.react-datepicker__week div.react-datepicker__day {
+  &:hover {
+    color: #7c5dfa;
+    background-color: transparent;
+  }
+  &--selected {
+    color: #7c5dfa;
+    background-color: transparent;
+  }
+  &--outside-month {
+    opacity: 0.3;
+  }
+  &--keyboard-selected {
+    background-color: transparent;
+  }
+}
+
+.calendar-label {
+  position: relative;
+  img {
+    position: absolute;
+    right: 10px;
+    top: 45%;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.invoice-form__payment-terms {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 10px;
+  border: 1px solid #252945;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+  letter-spacing: -0.25px;
+  position: relative;
+  border-radius: 4px;
+  div.modal {
+    width: 100%;
+    height: auto;
+    left: 0;
+    top: 48px;
+    border-radius: 3px;
+    .modal-input__checkbox:checked:after {
+      left: 6px;
+      bottom: 6px;
+    }
+  }
+}
+
+div.back-button {
+  padding: 10px 0 10px 0;
+  button {
+    @include flex-center;
+    gap: 15px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+}
+
+.invoice-form__mode-display {
+  display: flex;
+  align-items: center;
+  padding: 10px 0 10px 0;
+  span {
+    margin-left: 10px;
+    font-size: 1.5rem;
+  }
+}
+
+div.empty-message {
+  @include flex-center;
+  flex-direction: column;
+  height: 70vh;
+  h2 {
+    margin: 60px 0 20px 0;
+  }
+}
+
+.delete-modal {
+  @include flex-center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  &__content {
+    @include flex-center;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 327px;
+    min-height: 220px;
+    max-width: 480px;
+    max-height: 249px;
+    width: 90%;
+    height: auto;
+    z-index: 9999;
+    padding: 30px;
+    box-shadow: 0px 10px 20px 0px rgba(72, 84, 159, 0.25);
+    & h2 {
+      margin-bottom: 30px;
+    }
+    & p {
+      margin-bottom: 30px;
+    }
+    .modal-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
   }
 }
