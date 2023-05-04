@@ -897,8 +897,8 @@ div.empty-message h2 {
     position: fixed;
     top: 74px;
     overflow: auto;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
   }
   .invoice-form__buttons {
     display: none;
@@ -932,7 +932,7 @@ div.empty-message h2 {
     padding-bottom: 20px;
     display: flex;
     justify-content: flex-end;
-    border-top-right-radius: 10px;
+    border-top-right-radius: 20px;
     gap: 10px;
     box-shadow: 0 -8px 12px -4px rgba(0, 0, 0, 0.1);
   }
@@ -942,5 +942,79 @@ div.empty-message h2 {
   .invoice-form input,
   div.invoice-form__payment-terms {
     margin-left: 1px;
+  }
+}
+@media (min-width: 1024px) {
+  div.form-container {
+    height: 100vh;
+    top: 0px;
+    left: 72px;
+    border-radius: 20px;
+  }
+  .navigation-bar {
+    width: 72px;
+    height: 100vh;
+    flex-direction: column;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+  .navigation-bar__button {
+    flex-direction: column;
+  }
+  .navigation-bar__button-switch {
+    margin: 0 auto;
+  }
+  .navigation-bar__avatar {
+    border-top: 1px solid #979797;
+    border-left: none;
+  }
+  div.back-button,
+  div.invoice-header {
+    margin-top: 72px;
+  }
+  .invoice-header__button-plus,
+  .navigation-bar__button-switch,
+  div.modal-body input,
+  div.back-button button,
+  button.delete-button,
+  button.edit-button,
+  button.paid-button,
+  div.invoice-form__payment-terms button,
+  div.invoice-form label,
+  button.save-button,
+  button.cancel-button,
+  button.draft-button,
+  .invoice-form__item-delete {
+    cursor: pointer;
+  }
+  div.back-button button:hover {
+    color: #7e88c3;
+  }
+  div.invoice-item:hover {
+    border: 1px solid #7c5dfa;
+  }
+  .invoice-header__button-plus {
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Dodane */
+  }
+  .invoice-header__button-plus:hover {
+    transform: scale(1.1);
+    background-color: #33d69f;
+  }
+  button.edit-button:hover {
+    background-color: #dfe3fa;
+    color: #7e88c3;
+  }
+  button.delete-button:hover {
+    background-color: #ff9797;
+  }
+  button.paid-button:hover,
+  button.save-button:hover {
+    background-color: #6742ff;
+  }
+  button.draft-button:hover {
+    background-color: #0c0e16;
   }
 }/*# sourceMappingURL=styles.css.map */
