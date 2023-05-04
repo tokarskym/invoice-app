@@ -2,15 +2,15 @@ import { createContext, useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  h1, h2, h3, h4, div.modal-body label, div.back-button button {
+  h1, h2, h3, h4, div.modal-body label, div.back-button button, .item-name, .item-total {
     color: ${({ theme }) => theme.headingColor};
   }
 
-  p {
+  p, thead tr th, .item-qty, .item-price {
     color: ${({ theme }) => theme.paragraphColor};
   }
 
-  body { 
+  body, .form-container, .modal-form__buttons { 
     background-color: ${({ theme }) => theme.bodyColor}; 
   }
 

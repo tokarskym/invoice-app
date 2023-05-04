@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap");
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -78,17 +77,14 @@ h3 {
   justify-content: space-between;
   align-items: center;
 }
-
 .navigation-bar__button {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .navigation-bar__button-switch {
   margin-right: 19px;
 }
-
 .navigation-bar__avatar {
   width: 72px;
   height: 72px;
@@ -97,13 +93,11 @@ h3 {
   align-items: center;
   justify-content: center;
 }
-
 .navigation-bar__avatar-img {
   width: 32px;
   height: 32px;
   border-radius: 50%;
 }
-
 .navigation-bar__logo {
   position: relative;
   width: 72px;
@@ -112,7 +106,6 @@ h3 {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
-
 .navigation-bar__logo-img {
   z-index: 1;
   position: absolute;
@@ -120,7 +113,6 @@ h3 {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 .navigation-bar__logo-bottom {
   width: 72px;
   height: 36px;
@@ -137,7 +129,6 @@ h3 {
   justify-content: space-between;
   padding: 20px 0 20px 0;
 }
-
 .invoice-header__buttons {
   display: flex;
   align-items: center;
@@ -145,11 +136,10 @@ h3 {
   flex-direction: row;
   position: relative;
 }
-
 .invoice-header__buttons-select {
   cursor: pointer;
   -moz-appearance: none;
-  appearance: none;
+       appearance: none;
   -webkit-appearance: none;
   width: 70px;
   display: flex;
@@ -157,7 +147,6 @@ h3 {
   justify-content: space-between;
   margin-right: 5px;
 }
-
 .invoice-header__buttons-select h3 {
   font-size: 1.1rem;
 }
@@ -179,12 +168,10 @@ div.modal div.modal-body {
   gap: 10px;
   padding: 15px;
 }
-
 div.modal div.modal-body input {
   width: 20px;
   height: 20px;
 }
-
 div.modal div.modal-body label {
   display: flex;
   flex-direction: row;
@@ -234,12 +221,10 @@ div.modal div.modal-body label {
   padding: 5px;
   margin-left: 10px;
 }
-
 .invoice-header__button h3 {
   color: white;
   margin-right: 5px;
 }
-
 .invoice-header__button-plus {
   width: 32px;
   height: 32px;
@@ -259,37 +244,30 @@ div.modal div.modal-body label {
   padding: 10px;
   margin-bottom: 16px;
 }
-
 .invoice-item__id {
   grid-area: id;
   margin-bottom: 10px;
   margin-left: 10px;
 }
-
 .invoice-item__id h3 {
   display: inline-block;
 }
-
 .invoice-item__payment-due {
   grid-area: date;
   margin-left: 10px;
 }
-
 .invoice-item__total {
   grid-area: total;
   margin-left: 10px;
 }
-
 .invoice-item__client {
   grid-area: client;
   text-align: right;
   margin-right: 10px;
 }
-
 .invoice-item__status {
   grid-area: status;
 }
-
 .invoice-item__prefix {
   color: #7e88c3;
 }
@@ -305,11 +283,9 @@ div.modal div.modal-body label {
 .invoice-item {
   border-radius: 6px;
 }
-
 .invoice-item__wrapper {
   width: 100%;
 }
-
 .invoice-item__status {
   width: 104px;
   height: 40px;
@@ -321,30 +297,24 @@ div.modal div.modal-body label {
   justify-self: end;
   margin-right: 10px;
 }
-
 .invoice-item__status h3 {
   display: inline-block;
   background-color: transparent;
 }
-
 .invoice-item__status-paid {
   background-color: rgba(51, 214, 159, 0.1);
   color: #33d69f;
 }
-
 .invoice-item__status-pending {
   background-color: rgba(255, 143, 0, 0.1);
   color: #ff8f00;
 }
-
 .invoice-item__status-draft {
   background-color: rgba(223, 227, 250, 0.4);
 }
-
 .invoice-item__status-dot--pending {
   background-color: #ff8f00;
 }
-
 .invoice-item__status-dot--paid {
   background-color: #33d69f;
 }
@@ -359,7 +329,6 @@ div.modal div.modal-body label {
   padding: 20px;
   margin-bottom: 16px;
 }
-
 .invoice-details__status div {
   margin: 0;
 }
@@ -375,48 +344,30 @@ div.modal div.modal-body label {
   grid-template-areas: "id ." "adres ." "date recipient" "payment recipient" "email ." "items items" "total total";
   justify-items: start;
 }
-
-.invoice-details__info-id,
-.invoice-details__info-adres,
-.invoice-details__info-date,
-.invoice-details__info-payment,
-.invoice-details__info-email,
-.invoice-details__info-recipient {
+.invoice-details__info-id, .invoice-details__info-adres, .invoice-details__info-date, .invoice-details__info-payment, .invoice-details__info-email, .invoice-details__info-recipient {
   margin-bottom: 30px;
 }
-
-.invoice-details__info-date p,
-.invoice-details__info-payment p,
-.invoice-details__info-email p,
-.invoice-details__info-recipient p:first-of-type,
-.invoice-details__info-recipient h3 {
+.invoice-details__info-date p, .invoice-details__info-payment p, .invoice-details__info-email p, .invoice-details__info-recipient p:first-of-type, .invoice-details__info-recipient h3 {
   margin-bottom: 5px;
 }
-
 .invoice-details__info-id {
   grid-area: id;
 }
-
 .invoice-details__info-adres {
   grid-area: adres;
 }
-
 .invoice-details__info-date {
   grid-area: date;
 }
-
 .invoice-details__info-payment {
   grid-area: payment;
 }
-
 .invoice-details__info-email {
   grid-area: email;
 }
-
 .invoice-details__info-recipient {
   grid-area: recipient;
 }
-
 .invoice-details__info-items {
   grid-area: items;
   width: 100%;
@@ -460,13 +411,11 @@ button.edit-button {
   width: 73px;
   background-color: #252945;
 }
-
 button.delete-button {
   width: 89px;
   background-color: #f3ece4;
   color: #ffffff;
 }
-
 button.paid-button {
   width: 149px;
   background-color: #7c5dfa;
@@ -486,6 +435,7 @@ a.edit-button {
 
 .invoice-form__heading {
   color: #7c5dfa;
+  margin-bottom: 6px;
 }
 
 .invoice-form label {
@@ -553,7 +503,6 @@ div.invoice-form__payment-terms {
 div.invoice-form__payment-terms div.modal-body label {
   margin-bottom: 0;
 }
-
 div.invoice-form__payment-terms div.modal-body input {
   margin-top: 0;
 }
@@ -574,21 +523,18 @@ div.invoice-form__payment-terms div.modal-body input {
   grid-template-rows: auto;
   grid-template-areas: "name quantity price total delete";
   -moz-column-gap: 5px;
-  column-gap: 5px;
+       column-gap: 5px;
 }
 
 .invoice-form__item-name {
   grid-area: name;
 }
-
 .invoice-form__item-quantity {
   grid-area: quantity;
 }
-
 .invoice-form__item-price {
   grid-area: price;
 }
-
 .invoice-form__item-total {
   grid-area: total;
   display: flex;
@@ -596,7 +542,6 @@ div.invoice-form__payment-terms div.modal-body input {
   justify-content: center;
   height: 100%;
 }
-
 .invoice-form__item-delete {
   grid-area: delete;
   margin: 0 auto;
@@ -613,16 +558,13 @@ div.invoice-form__payment-terms div.modal-body input {
 button {
   color: #dfe3fa;
 }
-
 button.save-button {
   width: 114px;
   background-color: #7c5dfa;
 }
-
 button.cancel-button {
   width: 84px;
 }
-
 button.draft-button {
   width: 117px;
   background-color: #373b53;
@@ -665,7 +607,6 @@ div.react-datepicker__month-container div.react-datepicker__header {
   border: none;
   background-color: transparent;
 }
-
 div.react-datepicker__month-container div.react-datepicker__header .react-datepicker__current-month {
   color: white;
 }
@@ -700,16 +641,13 @@ div.react-datepicker__month-container div.react-datepicker__month div.react-date
   color: #7c5dfa;
   background-color: transparent;
 }
-
 div.react-datepicker__month-container div.react-datepicker__month div.react-datepicker__week div.react-datepicker__day--selected {
   color: #7c5dfa;
   background-color: transparent;
 }
-
 div.react-datepicker__month-container div.react-datepicker__month div.react-datepicker__week div.react-datepicker__day--outside-month {
   opacity: 0.3;
 }
-
 div.react-datepicker__month-container div.react-datepicker__month div.react-datepicker__week div.react-datepicker__day--keyboard-selected {
   background-color: transparent;
 }
@@ -717,7 +655,6 @@ div.react-datepicker__month-container div.react-datepicker__month div.react-date
 .calendar-label {
   position: relative;
 }
-
 .calendar-label img {
   position: absolute;
   right: 10px;
@@ -740,7 +677,6 @@ div.react-datepicker__month-container div.react-datepicker__month div.react-date
   position: relative;
   border-radius: 4px;
 }
-
 .invoice-form__payment-terms div.modal {
   width: 100%;
   height: auto;
@@ -748,7 +684,6 @@ div.react-datepicker__month-container div.react-datepicker__month div.react-date
   top: 48px;
   border-radius: 3px;
 }
-
 .invoice-form__payment-terms div.modal .modal-input__checkbox:checked:after {
   left: 6px;
   bottom: 6px;
@@ -756,8 +691,8 @@ div.react-datepicker__month-container div.react-datepicker__month div.react-date
 
 div.back-button {
   padding: 10px 0 10px 0;
+  margin: 0 auto;
 }
-
 div.back-button button {
   display: flex;
   align-items: center;
@@ -772,7 +707,6 @@ div.back-button button {
   align-items: center;
   padding: 10px 0 10px 0;
 }
-
 .invoice-form__mode-display span {
   margin-left: 10px;
   font-size: 1.5rem;
@@ -785,7 +719,6 @@ div.empty-message {
   flex-direction: column;
   height: 70vh;
 }
-
 div.empty-message h2 {
   margin: 60px 0 20px 0;
 }
@@ -802,7 +735,6 @@ div.empty-message h2 {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
-
 .delete-modal__content {
   display: flex;
   align-items: center;
@@ -822,15 +754,12 @@ div.empty-message h2 {
   padding: 30px;
   box-shadow: 0px 10px 20px 0px rgba(72, 84, 159, 0.25);
 }
-
 .delete-modal__content h2 {
   margin-bottom: 30px;
 }
-
 .delete-modal__content p {
   margin-bottom: 30px;
 }
-
 .delete-modal__content .modal-buttons {
   width: 100%;
   display: flex;
@@ -838,4 +767,180 @@ div.empty-message h2 {
   gap: 10px;
 }
 
-/*# sourceMappingURL=styles.css.map */
+.list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .invoice-item {
+    grid-template-columns: 0.5fr 0.75fr 1fr 0.25fr 0.75fr 1fr 0.25fr;
+    grid-template-rows: auto;
+    grid-template-areas: "id date client . total status link";
+    align-items: center;
+    justify-items: end;
+    width: calc(100% - 20px);
+    max-width: 730px;
+  }
+  .invoice-item__id {
+    margin-bottom: 0;
+  }
+  .link-arrow-right {
+    grid-area: link;
+    padding: 10px;
+  }
+  .invoice-header {
+    width: calc(100% - 97px);
+    max-width: 730px;
+  }
+  .invoice-details__buttons {
+    justify-content: flex-end;
+    background-color: transparent;
+  }
+  .invoice-details__status {
+    height: 91px;
+    width: calc(100% - 97px);
+    max-width: 730px;
+  }
+  .invoice-details__status p {
+    margin-right: 20px;
+  }
+  div.invoice-details__info,
+  div.back-button {
+    width: calc(100% - 97px);
+    max-width: 730px;
+  }
+  div.invoice-details__info {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "id . . adres" "date recipient email ." "payment recipient . . " "items items items items" "total total total total";
+  }
+  .invoice-details__info-adres {
+    justify-self: end;
+  }
+  .invoice-details__info-adres p {
+    text-align: right;
+  }
+  .invoice-details__table {
+    width: 100%;
+  }
+  .invoice-details__table thead tr,
+  .invoice-details__table tbody tr {
+    display: grid;
+    grid-template-columns: 2.5fr 0.5fr 1fr 1fr;
+    grid-template-areas: "name qty price total";
+  }
+  .invoice-details__table th.item-name-label,
+  .invoice-details__table td.item-name {
+    grid-area: name;
+    justify-self: start;
+  }
+  .invoice-details__table th.item-qty-label,
+  .invoice-details__table td.item-qty {
+    grid-area: qty;
+    justify-self: center;
+  }
+  .invoice-details__table th.item-price-label,
+  .invoice-details__table td.item-price {
+    grid-area: price;
+    justify-self: end;
+  }
+  .invoice-details__table th.item-total-label,
+  .invoice-details__table td.item-total {
+    grid-area: total;
+    justify-self: end;
+  }
+  .invoice-details__table thead tr {
+    padding: 20px;
+  }
+  .invoice-details__table thead tr th {
+    font-weight: lighter;
+    font-size: 0.8rem;
+  }
+  .invoice-details__table tbody tr td {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  .invoice-details__table tbody tr td:nth-child(1) {
+    grid-area: name;
+  }
+  .invoice-details__table tbody tr td:nth-child(2) {
+    grid-area: qty;
+  }
+  .invoice-details__table tbody tr td:nth-child(3) {
+    grid-area: price;
+  }
+  .invoice-details__table tbody tr td:nth-child(4) {
+    grid-area: total;
+  }
+  .modal-open {
+    overflow: hidden;
+  }
+  div.modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
+  div.form-container {
+    flex-direction: column;
+    justify-content: normal;
+    width: 74%;
+    max-width: 616px;
+    height: 90%;
+    padding: 60px;
+    position: fixed;
+    top: 74px;
+    overflow: auto;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .invoice-form__buttons {
+    display: none;
+  }
+  div.modal-content {
+    overflow-y: auto;
+    padding-bottom: 20px;
+    padding-right: 16px;
+  }
+  div.modal-content::-webkit-scrollbar {
+    width: 4px;
+    background-color: transparent;
+  }
+  div.modal-content::-webkit-scrollbar-thumb {
+    background-color: #dfe3fa;
+    border-radius: 4px;
+  }
+  div.modal-content::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  div.modal-content {
+    scrollbar-width: thin;
+    scrollbar-color: #dfe3fa transparent;
+  }
+  div.modal-form__buttons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+    border-top-right-radius: 10px;
+    gap: 10px;
+    box-shadow: 0 -8px 12px -4px rgba(0, 0, 0, 0.1);
+  }
+  div.modal-form__buttons button.save-button {
+    margin-right: 80px;
+  }
+  .invoice-form input,
+  div.invoice-form__payment-terms {
+    margin-left: 1px;
+  }
+}/*# sourceMappingURL=styles.css.map */

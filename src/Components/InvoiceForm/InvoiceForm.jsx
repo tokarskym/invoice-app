@@ -8,9 +8,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function InvoiceForm({ onAddInvoice, handleEditInvoice, mode, invoicesList }) {
+export default function InvoiceForm({ onAddInvoice, handleEditInvoice, mode, invoicesList, invoiceToEdit, isTablet, onCloseModal, invoiceID }) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const newInvoiceID = invoiceID || id;
 
   //STATES FOR THE NEW OR EDITED INVOICE
   const [createdAt, setCreatedAt] = useState(new Date());
@@ -60,7 +61,7 @@ export default function InvoiceForm({ onAddInvoice, handleEditInvoice, mode, inv
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const newInvoice = {
-    id: id,
+    id: newInvoiceID,
     createdAt: createdAt,
     paymentDue: calculateDueDate(createdAt, paymentTerms),
     description: description,
@@ -330,9 +331,10 @@ export default function InvoiceForm({ onAddInvoice, handleEditInvoice, mode, inv
     const draftInvoice = { ...invoice, status: 'draft' };
     onAddInvoice(draftInvoice);
     navigate(-1);
+    onCloseModal();
   };
 
-  const editedInvoice = invoicesList ? invoicesList.find((invoice) => invoice.id === id) : undefined;
+  const editedInvoice = invoiceToEdit || (invoicesList ? invoicesList.find((invoice) => invoice.id === id) : undefined);
 
   useEffect(() => {
     if (mode === 'edit' && editedInvoice) {
@@ -358,10 +360,19 @@ export default function InvoiceForm({ onAddInvoice, handleEditInvoice, mode, inv
     if (Object.keys(formErrors).length === 0) {
       if (mode === 'new') {
         onAddInvoice(newInvoice);
-        navigate(-1);
+        if (isTablet) {
+          onCloseModal();
+        } else {
+          navigate(-1);
+        }
       } else if (mode === 'edit') {
-        handleEditInvoice(newInvoice);
-        navigate(-2);
+        const updatedInvoice = invoiceToEdit ? { ...newInvoice, id: invoiceToEdit.id } : newInvoice;
+        handleEditInvoice(updatedInvoice);
+        if (isTablet) {
+          onCloseModal();
+        } else {
+          navigate(-1);
+        }
       }
     } else {
       console.log('Form validation errors:', formErrors);
@@ -370,326 +381,371 @@ export default function InvoiceForm({ onAddInvoice, handleEditInvoice, mode, inv
 
   return (
     <>
-      <BackButton />
-      <div className="container">
-        {mode === 'edit' ? (
+      {!isTablet && <BackButton />}
+      <div className={isTablet ? 'modal-background' : 'container'}>
+        {mode === 'edit' && !isTablet ? (
           <div className="invoice-form__mode-display">
             <h2>Edit</h2>
             <span className="invoice-item__prefix invoice-form__prefix">#</span>
             <h2>{id}</h2>
           </div>
         ) : (
-          mode === 'new' && (
+          mode === 'new' &&
+          !isTablet && (
             <div className="invoice-form__mode-display">
               <h2>New Invoice</h2>
               <span className="invoice-item__prefix invoice-form__prefix">#</span>
-              <h2>{id}</h2>
+              <h2>{newInvoice.id}</h2>
             </div>
           )
         )}
         <div className="form-container">
-          <form className="invoice-form" id="invoice-form" onSubmit={handleSubmit}>
-            <h3 className="invoice-form__heading">Bill From</h3>
-            <div className="invoice-form__adress">
-              <label htmlFor="sender-city">
-                Street Address
-                {senderAddressTouched.street && !senderAddress.street ? (
-                  <p className="error">can't be empty</p>
-                ) : (
-                  errors.senderAddress && errors.senderAddress.street && <p className="error">{errors.senderAddress.street}</p>
-                )}
-                <input
-                  className={`invoice-form__adress-street ${senderAddressTouched.street && !senderAddress.street ? 'input-error' : ''}`}
-                  id="sender-city"
-                  type="text"
-                  onBlur={() => setSenderAddressTouched((prev) => ({ ...prev, street: true }))}
-                  value={senderAddress.street}
-                  onChange={(e) => handleSenderAddressChange('street', e.target.value)}
-                />
-              </label>
-              <div className="city-postcode">
-                <label className="invoice-form__adress-city" htmlFor="sender-city">
-                  City
-                  {senderAddressTouched.city && !senderAddress.city ? (
+          <div className="modal-content">
+            {mode === 'edit' && isTablet ? (
+              <div className="invoice-form__mode-display">
+                <h2>Edit</h2>
+                <span className="invoice-item__prefix invoice-form__prefix">#</span>
+                <h2>{invoiceToEdit.id}</h2>
+              </div>
+            ) : (
+              mode === 'new' &&
+              isTablet && (
+                <div className="invoice-form__mode-display">
+                  <h2>New Invoice</h2>
+                  <span className="invoice-item__prefix invoice-form__prefix">#</span>
+                  <h2>{invoiceID}</h2>
+                </div>
+              )
+            )}
+            <form className="invoice-form" id="invoice-form" onSubmit={handleSubmit}>
+              <h3 className="invoice-form__heading">Bill From</h3>
+              <div className="invoice-form__adress">
+                <label htmlFor="sender-city">
+                  Street Address
+                  {senderAddressTouched.street && !senderAddress.street ? (
                     <p className="error">can't be empty</p>
                   ) : (
-                    errors.senderAddress && errors.senderAddress.city && <p className="error">{errors.senderAddress.city}</p>
+                    errors.senderAddress && errors.senderAddress.street && <p className="error">{errors.senderAddress.street}</p>
                   )}
                   <input
-                    className={senderAddressTouched.city && !senderAddress.city ? 'input-error' : ''}
-                    type="text"
+                    className={`invoice-form__adress-street ${senderAddressTouched.street && !senderAddress.street ? 'input-error' : ''}`}
                     id="sender-city"
-                    onBlur={() => setSenderAddressTouched((prev) => ({ ...prev, city: true }))}
-                    value={senderAddress.city}
-                    onChange={(e) => handleSenderAddressChange('city', e.target.value)}
-                  />
-                </label>
-                <label className="invoice-form__adress-code" htmlFor="sender-postcode">
-                  Post Code
-                  {senderAddressTouched.postCode && !senderAddress.postCode ? (
-                    <p className="error">can't be empty</p>
-                  ) : (
-                    errors.senderAddress && errors.senderAddress.postCode && <p className="error">{errors.senderAddress.postCode}</p>
-                  )}
-                  <input
                     type="text"
-                    className={senderAddressTouched.postCode && !senderAddress.postCode ? 'input-error' : ''}
-                    id="sender-postcode"
-                    onBlur={() => setSenderAddressTouched((prev) => ({ ...prev, postCode: true }))}
-                    maxLength="6"
-                    value={senderAddress.postCode}
-                    onChange={(e) => handlePostCodeChange(e.target.value, 'senderPostcode')}
+                    onBlur={() => setSenderAddressTouched((prev) => ({ ...prev, street: true }))}
+                    value={senderAddress.street}
+                    onChange={(e) => handleSenderAddressChange('street', e.target.value)}
                   />
                 </label>
-              </div>
-              <label htmlFor="sender-country">
-                Country
-                {senderAddressTouched.country && !senderAddress.country ? (
-                  <p className="error">can't be empty</p>
-                ) : (
-                  errors.senderAddress && errors.senderAddress.country && <p className="error">{errors.senderAddress.country}</p>
-                )}
-                <input
-                  id="sender-country"
-                  className={senderAddressTouched.country && !senderAddress.country ? 'input-error' : ''}
-                  type="text"
-                  onBlur={() => setSenderAddressTouched((prev) => ({ ...prev, country: true }))}
-                  value={senderAddress.country}
-                  onChange={(e) => handleSenderAddressChange('country', e.target.value)}
-                />
-              </label>
-            </div>
-            <div className="invoice-form__recipient">
-              <h3 className="invoice-form__heading">Bill To</h3>
-              <label htmlFor="client-name">
-                Client's Name
-                {clientNameTouched && !clientName ? <p className="error">can't be empty</p> : errors.clientName && <p className="error">{errors.clientName}</p>}
-                <input
-                  id="client-name"
-                  className={clientNameTouched && !clientName ? 'input-error' : ''}
-                  type="text"
-                  value={clientName}
-                  onBlur={() => setClientNameTouched(true)}
-                  onChange={(e) => setClientName(e.target.value)}
-                />
-              </label>
-              <label htmlFor="client-email">
-                Client's Email
-                {clientEmailTouched && !clientEmail ? <p className="error">can't be empty</p> : errors.clientEmail && <p className="error">{errors.clientEmail}</p>}
-                <input
-                  id="client-email"
-                  type="text"
-                  value={clientEmail}
-                  onChange={(e) => setClientEmail(e.target.value)}
-                  onBlur={() => setClientEmailTouched(true)}
-                  className={clientEmailTouched && !clientEmail ? 'input-error' : ''}
-                />
-              </label>
-              <label htmlFor="client-street">
-                Street Address
-                {clientAddressTouched.street && !clientAddress.street ? (
-                  <p className="error">can't be empty</p>
-                ) : (
-                  errors.clientAddress && errors.clientAddress.street && <p className="error">{errors.clientAddress.street}</p>
-                )}
-                <input
-                  id="client-street"
-                  className={clientAddressTouched.street && !clientAddress.street ? 'input-error' : ''}
-                  type="text"
-                  value={clientAddress.street}
-                  onBlur={() => setClientAddressTouched((prev) => ({ ...prev, street: true }))}
-                  onChange={(e) => handleClientAddressChange('street', e.target.value)}
-                />
-              </label>
-              <div className="city-postcode">
-                <label htmlFor="client-city">
-                  City
-                  {clientAddressTouched.city && !clientAddress.city ? (
-                    <p className="error">can't be empty</p>
-                  ) : (
-                    errors.clientAddress && errors.clientAddress.city && <p className="error">{errors.clientAddress.city}</p>
-                  )}
-                  <input
-                    type="text"
-                    className={clientAddressTouched.city && !clientAddress.city ? 'input-error' : ''}
-                    id="client-city"
-                    onBlur={() => setClientAddressTouched((prev) => ({ ...prev, city: true }))}
-                    value={clientAddress.city}
-                    onChange={(e) => handleClientAddressChange('city', e.target.value)}
-                  />
-                </label>
-                <label htmlFor="client-postcode">
-                  Post Code
-                  {clientAddressTouched.postCode && !clientAddress.postCode ? (
-                    <p className="error">can't be empty</p>
-                  ) : (
-                    errors.clientAddress && errors.clientAddress.postCode && <p className="error">{errors.clientAddress.postCode}</p>
-                  )}
-                  <input
-                    className={clientAddressTouched.postCode && !clientAddress.postCode ? 'input-error' : ''}
-                    type="text"
-                    id="client-postcode"
-                    maxLength="6"
-                    value={clientAddress.postCode}
-                    onBlur={() => setClientAddressTouched((prev) => ({ ...prev, postCode: true }))}
-                    onChange={(e) => handlePostCodeChange(e.target.value, 'clientPostcode')}
-                  />
-                </label>
-              </div>
-              <label htmlFor="client-country">
-                Country
-                {clientAddressTouched.country && !clientAddress.country ? (
-                  <p className="error">can't be empty</p>
-                ) : (
-                  errors.clientAddress && errors.clientAddress.country && <p className="error">{errors.clientAddress.country}</p>
-                )}
-                <input
-                  id="client-country"
-                  className={clientAddressTouched.country && !clientAddress.country ? 'input-error' : ''}
-                  type="text"
-                  value={clientAddress.country}
-                  onBlur={() => setClientAddressTouched((prev) => ({ ...prev, country: true }))}
-                  onChange={(e) => handleClientAddressChange('country', e.target.value)}
-                />
-              </label>
-            </div>
-            <label onClick={(e) => e.preventDefault()} className="calendar-label" htmlFor="date-picker">
-              Invoice Date
-              <DatePicker id="date-picker" tabIndex="0" selected={createdAt ? new Date(createdAt) : null} onChange={(date) => handleDateChange(date)} dateFormat="dd MMM yyyy" />
-              <img src={Calendar} alt="calendar icon" />
-            </label>
-            <label htmlFor="payment-terms">
-              Payment terms
-              {(paymentTermsTouched && !paymentTerms) || errors.paymentTerms ? <p className="error">can't be empty</p> : null}
-              <div
-                id="payment-terms"
-                tabIndex="0"
-                onBlur={() => setPaymentTermsTouched(true)}
-                className={`invoice-form__payment-terms ${paymentTermsTouched && !paymentTerms ? 'input-error' : ''}`}
-              >
-                <p>{!paymentTerms ? 'Choose an option' : paymentTerms + (paymentTerms === 1 ? ' Day' : ' Days')} </p>
-                <button onClick={handleModalOpen}>
-                  <svg width="11" height="7" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1l4.228 4.228L9.456 1" stroke="#7C5DFA" strokeWidth="2" fill="none" fillRule="evenodd" />
-                  </svg>
-                </button>
-                {isModalOpen && (
-                  <div className="modal">
-                    <div className="modal-body">
-                      <label htmlFor="1day">
-                        <input id="1day" className="modal-input__checkbox" type="checkbox" checked={paymentTerms === 1} value="1" onChange={handleDaysChange} />1 Day
-                      </label>
-                      <label htmlFor="7days">
-                        <input id="7days" className="modal-input__checkbox" type="checkbox" value="7" checked={paymentTerms === 7} onChange={handleDaysChange} />7 Days
-                      </label>
-                      <label htmlFor="14days">
-                        <input id="14days" className="modal-input__checkbox" type="checkbox" value="14" checked={paymentTerms === 14} onChange={handleDaysChange} />
-                        14 Days
-                      </label>
-                      <label htmlFor="30days">
-                        <input id="30days" className="modal-input__checkbox" type="checkbox" value="30" checked={paymentTerms === 30} onChange={handleDaysChange} />
-                        30 Days
-                      </label>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </label>
-            <label htmlFor="project-description">
-              Project Description
-              {projectDescriptionTouched && !description ? (
-                <p className="error">can't be empty</p>
-              ) : (
-                errors.projectDescription && <p className="error">{errors.projectDescription}</p>
-              )}
-              <input
-                className={projectDescriptionTouched && !description ? 'input-error' : ''}
-                onBlur={() => setProjectDescriptionTouched(true)}
-                id="project-description"
-                type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </label>
-            <div>
-              {items.map((item, index) => (
-                <div key={`${item.id}-${index}`} className="invoice-form__item-grid">
-                  <label htmlFor="item-name">
-                    Item name
-                    {itemsTouched[index]?.name && !item.name ? (
+                <div className="city-postcode">
+                  <label className="invoice-form__adress-city" htmlFor="sender-city">
+                    City
+                    {senderAddressTouched.city && !senderAddress.city ? (
                       <p className="error">can't be empty</p>
                     ) : (
-                      errors.items && errors.items[index]?.name && <p className="error">{errors.items[index].name}</p>
+                      errors.senderAddress && errors.senderAddress.city && <p className="error">{errors.senderAddress.city}</p>
                     )}
                     <input
-                      id="item-name"
+                      className={senderAddressTouched.city && !senderAddress.city ? 'input-error' : ''}
                       type="text"
-                      className={`invoice-form__item-name${itemsTouched[index]?.name && !item.name ? ' input-error' : ''}`}
-                      value={item.name}
-                      onChange={(e) => handleItemsChange(index, 'name', e.target.value)}
-                      onBlur={() => handleBlur('name', index)}
+                      id="sender-city"
+                      onBlur={() => setSenderAddressTouched((prev) => ({ ...prev, city: true }))}
+                      value={senderAddress.city}
+                      onChange={(e) => handleSenderAddressChange('city', e.target.value)}
                     />
                   </label>
-                  <label htmlFor="item-qty">
-                    Amount
-                    {itemsTouched[index]?.quantity && !item.quantity ? (
+                  <label className="invoice-form__adress-code" htmlFor="sender-postcode">
+                    Post Code
+                    {senderAddressTouched.postCode && !senderAddress.postCode ? (
                       <p className="error">can't be empty</p>
                     ) : (
-                      errors.items && errors.items[index]?.quantity && <p className="error">{errors.items[index].quantity}</p>
+                      errors.senderAddress && errors.senderAddress.postCode && <p className="error">{errors.senderAddress.postCode}</p>
                     )}
                     <input
-                      type="number"
-                      id="itemy-qty"
-                      className={`invoice-form__item-quantity${itemsTouched[index]?.quantity && !item.quantity ? ' input-error' : ''}`}
-                      value={item.quantity}
-                      onChange={(e) => handleItemsChange(index, 'quantity', parseInt(e.target.value))}
-                      onBlur={() => handleBlur('quantity', index)}
+                      type="text"
+                      className={senderAddressTouched.postCode && !senderAddress.postCode ? 'input-error' : ''}
+                      id="sender-postcode"
+                      onBlur={() => setSenderAddressTouched((prev) => ({ ...prev, postCode: true }))}
+                      maxLength="6"
+                      value={senderAddress.postCode}
+                      onChange={(e) => handlePostCodeChange(e.target.value, 'senderPostcode')}
                     />
                   </label>
-                  <label htmlFor="item-price">
-                    Price
-                    {itemsTouched[index]?.price && !item.price ? (
+                </div>
+                <label htmlFor="sender-country">
+                  Country
+                  {senderAddressTouched.country && !senderAddress.country ? (
+                    <p className="error">can't be empty</p>
+                  ) : (
+                    errors.senderAddress && errors.senderAddress.country && <p className="error">{errors.senderAddress.country}</p>
+                  )}
+                  <input
+                    id="sender-country"
+                    className={senderAddressTouched.country && !senderAddress.country ? 'input-error' : ''}
+                    type="text"
+                    onBlur={() => setSenderAddressTouched((prev) => ({ ...prev, country: true }))}
+                    value={senderAddress.country}
+                    onChange={(e) => handleSenderAddressChange('country', e.target.value)}
+                  />
+                </label>
+              </div>
+              <div className="invoice-form__recipient">
+                <h3 className="invoice-form__heading">Bill To</h3>
+                <label htmlFor="client-name">
+                  Client's Name
+                  {clientNameTouched && !clientName ? <p className="error">can't be empty</p> : errors.clientName && <p className="error">{errors.clientName}</p>}
+                  <input
+                    id="client-name"
+                    className={clientNameTouched && !clientName ? 'input-error' : ''}
+                    type="text"
+                    value={clientName}
+                    onBlur={() => setClientNameTouched(true)}
+                    onChange={(e) => setClientName(e.target.value)}
+                  />
+                </label>
+                <label htmlFor="client-email">
+                  Client's Email
+                  {clientEmailTouched && !clientEmail ? <p className="error">can't be empty</p> : errors.clientEmail && <p className="error">{errors.clientEmail}</p>}
+                  <input
+                    id="client-email"
+                    type="text"
+                    value={clientEmail}
+                    onChange={(e) => setClientEmail(e.target.value)}
+                    onBlur={() => setClientEmailTouched(true)}
+                    className={clientEmailTouched && !clientEmail ? 'input-error' : ''}
+                  />
+                </label>
+                <label htmlFor="client-street">
+                  Street Address
+                  {clientAddressTouched.street && !clientAddress.street ? (
+                    <p className="error">can't be empty</p>
+                  ) : (
+                    errors.clientAddress && errors.clientAddress.street && <p className="error">{errors.clientAddress.street}</p>
+                  )}
+                  <input
+                    id="client-street"
+                    className={clientAddressTouched.street && !clientAddress.street ? 'input-error' : ''}
+                    type="text"
+                    value={clientAddress.street}
+                    onBlur={() => setClientAddressTouched((prev) => ({ ...prev, street: true }))}
+                    onChange={(e) => handleClientAddressChange('street', e.target.value)}
+                  />
+                </label>
+                <div className="city-postcode">
+                  <label htmlFor="client-city">
+                    City
+                    {clientAddressTouched.city && !clientAddress.city ? (
                       <p className="error">can't be empty</p>
                     ) : (
-                      errors.items && errors.items[index]?.price && <p className="error">{errors.items[index].price}</p>
+                      errors.clientAddress && errors.clientAddress.city && <p className="error">{errors.clientAddress.city}</p>
                     )}
                     <input
-                      id="item-price"
-                      type="number"
-                      className={`invoice-form__item-price${itemsTouched[index]?.price && !item.price ? ' input-error' : ''}`}
-                      value={item.price}
-                      onChange={(e) => handleItemsChange(index, 'price', parseFloat(e.target.value))}
-                      onBlur={() => handleBlur('price', index)}
+                      type="text"
+                      className={clientAddressTouched.city && !clientAddress.city ? 'input-error' : ''}
+                      id="client-city"
+                      onBlur={() => setClientAddressTouched((prev) => ({ ...prev, city: true }))}
+                      value={clientAddress.city}
+                      onChange={(e) => handleClientAddressChange('city', e.target.value)}
                     />
                   </label>
-                  <label htmlFor="item-total">
-                    Total
-                    <div className="invoice-form__item-total" tabIndex="0" id="item-total" aria-labelledby="item-total">
-                      <p>{item.total}</p>
-                    </div>
+                  <label htmlFor="client-postcode">
+                    Post Code
+                    {clientAddressTouched.postCode && !clientAddress.postCode ? (
+                      <p className="error">can't be empty</p>
+                    ) : (
+                      errors.clientAddress && errors.clientAddress.postCode && <p className="error">{errors.clientAddress.postCode}</p>
+                    )}
+                    <input
+                      className={clientAddressTouched.postCode && !clientAddress.postCode ? 'input-error' : ''}
+                      type="text"
+                      id="client-postcode"
+                      maxLength="6"
+                      value={clientAddress.postCode}
+                      onBlur={() => setClientAddressTouched((prev) => ({ ...prev, postCode: true }))}
+                      onChange={(e) => handlePostCodeChange(e.target.value, 'clientPostcode')}
+                    />
                   </label>
-                  <button className="invoice-form__item-delete" onClick={() => removeItem(index)}>
-                    <svg width="13" height="16" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z"
-                        fill="#888EB0"
-                        fillRule="nonzero"
-                      />
+                </div>
+                <label htmlFor="client-country">
+                  Country
+                  {clientAddressTouched.country && !clientAddress.country ? (
+                    <p className="error">can't be empty</p>
+                  ) : (
+                    errors.clientAddress && errors.clientAddress.country && <p className="error">{errors.clientAddress.country}</p>
+                  )}
+                  <input
+                    id="client-country"
+                    className={clientAddressTouched.country && !clientAddress.country ? 'input-error' : ''}
+                    type="text"
+                    value={clientAddress.country}
+                    onBlur={() => setClientAddressTouched((prev) => ({ ...prev, country: true }))}
+                    onChange={(e) => handleClientAddressChange('country', e.target.value)}
+                  />
+                </label>
+              </div>
+              <label onClick={(e) => e.preventDefault()} className="calendar-label" htmlFor="date-picker">
+                Invoice Date
+                <DatePicker id="date-picker" tabIndex="0" selected={createdAt ? new Date(createdAt) : null} onChange={(date) => handleDateChange(date)} dateFormat="dd MMM yyyy" />
+                <img src={Calendar} alt="calendar icon" />
+              </label>
+              <label htmlFor="payment-terms">
+                Payment terms
+                {(paymentTermsTouched && !paymentTerms) || errors.paymentTerms ? <p className="error">can't be empty</p> : null}
+                <div
+                  id="payment-terms"
+                  tabIndex="0"
+                  onBlur={() => setPaymentTermsTouched(true)}
+                  className={`invoice-form__payment-terms ${paymentTermsTouched && !paymentTerms ? 'input-error' : ''}`}
+                >
+                  <p>{!paymentTerms ? 'Choose an option' : paymentTerms + (paymentTerms === 1 ? ' Day' : ' Days')} </p>
+                  <button onClick={handleModalOpen}>
+                    <svg width="11" height="7" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1l4.228 4.228L9.456 1" stroke="#7C5DFA" strokeWidth="2" fill="none" fillRule="evenodd" />
                     </svg>
                   </button>
+                  {isModalOpen && (
+                    <div className="modal">
+                      <div className="modal-body">
+                        <label htmlFor="1day">
+                          <input id="1day" className="modal-input__checkbox" type="checkbox" checked={paymentTerms === 1} value="1" onChange={handleDaysChange} />1 Day
+                        </label>
+                        <label htmlFor="7days">
+                          <input id="7days" className="modal-input__checkbox" type="checkbox" value="7" checked={paymentTerms === 7} onChange={handleDaysChange} />7 Days
+                        </label>
+                        <label htmlFor="14days">
+                          <input id="14days" className="modal-input__checkbox" type="checkbox" value="14" checked={paymentTerms === 14} onChange={handleDaysChange} />
+                          14 Days
+                        </label>
+                        <label htmlFor="30days">
+                          <input id="30days" className="modal-input__checkbox" type="checkbox" value="30" checked={paymentTerms === 30} onChange={handleDaysChange} />
+                          30 Days
+                        </label>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              ))}
-              <button className="invoice-form__item-add" onClick={addItem} disabled={items.some((item) => !item.name || !item.quantity || !item.price)}>
-                + Add New Item
-              </button>
+              </label>
+              <label htmlFor="project-description">
+                Project Description
+                {projectDescriptionTouched && !description ? (
+                  <p className="error">can't be empty</p>
+                ) : (
+                  errors.projectDescription && <p className="error">{errors.projectDescription}</p>
+                )}
+                <input
+                  className={projectDescriptionTouched && !description ? 'input-error' : ''}
+                  onBlur={() => setProjectDescriptionTouched(true)}
+                  id="project-description"
+                  type="text"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </label>
+              <div>
+                {items.map((item, index) => (
+                  <div key={`${item.id}-${index}`} className="invoice-form__item-grid">
+                    <label htmlFor="item-name">
+                      Item name
+                      {itemsTouched[index]?.name && !item.name ? (
+                        <p className="error">can't be empty</p>
+                      ) : (
+                        errors.items && errors.items[index]?.name && <p className="error">{errors.items[index].name}</p>
+                      )}
+                      <input
+                        id="item-name"
+                        type="text"
+                        className={`invoice-form__item-name${itemsTouched[index]?.name && !item.name ? ' input-error' : ''}`}
+                        value={item.name}
+                        onChange={(e) => handleItemsChange(index, 'name', e.target.value)}
+                        onBlur={() => handleBlur('name', index)}
+                      />
+                    </label>
+                    <label htmlFor="item-qty">
+                      Amount
+                      {itemsTouched[index]?.quantity && !item.quantity ? (
+                        <p className="error">can't be empty</p>
+                      ) : (
+                        errors.items && errors.items[index]?.quantity && <p className="error">{errors.items[index].quantity}</p>
+                      )}
+                      <input
+                        type="number"
+                        id="itemy-qty"
+                        className={`invoice-form__item-quantity${itemsTouched[index]?.quantity && !item.quantity ? ' input-error' : ''}`}
+                        value={item.quantity}
+                        onChange={(e) => handleItemsChange(index, 'quantity', parseInt(e.target.value))}
+                        onBlur={() => handleBlur('quantity', index)}
+                      />
+                    </label>
+                    <label htmlFor="item-price">
+                      Price
+                      {itemsTouched[index]?.price && !item.price ? (
+                        <p className="error">can't be empty</p>
+                      ) : (
+                        errors.items && errors.items[index]?.price && <p className="error">{errors.items[index].price}</p>
+                      )}
+                      <input
+                        id="item-price"
+                        type="number"
+                        className={`invoice-form__item-price${itemsTouched[index]?.price && !item.price ? ' input-error' : ''}`}
+                        value={item.price}
+                        onChange={(e) => handleItemsChange(index, 'price', parseFloat(e.target.value))}
+                        onBlur={() => handleBlur('price', index)}
+                      />
+                    </label>
+                    <label htmlFor="item-total">
+                      Total
+                      <div className="invoice-form__item-total" tabIndex="0" id="item-total" aria-labelledby="item-total">
+                        <p>{isNaN(item.total) ? (item.total === 0 ? '0' : '') : item.total}</p>
+                      </div>
+                    </label>
+                    <button className="invoice-form__item-delete" onClick={() => removeItem(index)}>
+                      <svg width="13" height="16" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z"
+                          fill="#888EB0"
+                          fillRule="nonzero"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+                <button className="invoice-form__item-add" onClick={addItem} disabled={items.some((item) => !item.name || !item.quantity || !item.price)}>
+                  + Add New Item
+                </button>
+              </div>
+            </form>
+          </div>
+          {isTablet && (
+            <div className="modal-form__buttons">
+              {mode === 'edit' ? (
+                <>
+                  <button className="cancel-button" onClick={isTablet ? onCloseModal : () => navigate(-1)}>
+                    Cancel
+                  </button>
+                  <button className="save-button" type="submit" form="invoice-form" onClick={handleSubmit}>
+                    Save Changes
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button className="cancel-button" onClick={isTablet ? onCloseModal : () => navigate(-1)}>
+                    Discard
+                  </button>
+                  <button className="draft-button" onClick={() => onSaveDraft(newInvoice)}>
+                    Save as Draft
+                  </button>
+                  <button className="save-button" type="submit" form="invoice-form">
+                    Save & Send
+                  </button>
+                </>
+              )}
             </div>
-          </form>
+          )}
         </div>
       </div>
       <div className="invoice-form__buttons">
         {mode === 'edit' ? (
           <>
-            <button className="cancel-button" onClick={() => navigate(-1)}>
+            <button className="cancel-button" onClick={isTablet ? onCloseModal : () => navigate(-1)}>
               Cancel
             </button>
             <button className="save-button" type="submit" form="invoice-form" onClick={handleSubmit}>
@@ -698,7 +754,7 @@ export default function InvoiceForm({ onAddInvoice, handleEditInvoice, mode, inv
           </>
         ) : (
           <>
-            <button className="cancel-button" onClick={() => navigate(-1)}>
+            <button className="cancel-button" onClick={isTablet ? onCloseModal : () => navigate(-1)}>
               Discard
             </button>
             <button className="draft-button" onClick={() => onSaveDraft(newInvoice)}>

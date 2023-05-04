@@ -462,6 +462,7 @@ a.edit-button {
 
 .invoice-form__heading {
   color: #7c5dfa;
+  margin-bottom: 6px;
 }
 
 .invoice-form label {
@@ -722,6 +723,7 @@ div.react-datepicker__month-container div.react-datepicker__month div.react-date
 
 div.back-button {
   padding: 10px 0 10px 0;
+  margin: 0 auto;
   button {
     @include flex-center;
     gap: 15px;
@@ -787,4 +789,199 @@ div.empty-message {
       gap: 10px;
     }
   }
+}
+.list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+//MEDIA FOR TABLETS
+
+@media (min-width: 768px) {
+  .invoice-item {
+    grid-template-columns: 0.5fr 0.75fr 1fr 0.25fr 0.75fr 1fr 0.25fr;
+    grid-template-rows: auto;
+    grid-template-areas: 'id date client . total status link';
+    align-items: center;
+    justify-items: end;
+    &__id {
+      margin-bottom: 0;
+    }
+    width: calc(100% - 20px);
+    max-width: 730px;
+  }
+  .link-arrow-right {
+    grid-area: link;
+    padding: 10px;
+  }
+  .invoice-header {
+    width: calc(100% - 97px);
+    max-width: 730px;
+  }
+  .invoice-details__buttons {
+    justify-content: flex-end;
+    background-color: transparent;
+  }
+  .invoice-details__status {
+    height: 91px;
+    width: calc(100% - 97px);
+    max-width: 730px;
+    p {
+      margin-right: 20px;
+    }
+  }
+  div.invoice-details__info,
+  div.back-button {
+    width: calc(100% - 97px);
+    max-width: 730px;
+  }
+  div.invoice-details__info {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      'id . . adres'
+      'date recipient email .'
+      'payment recipient . . '
+      'items items items items'
+      'total total total total';
+  }
+
+  .invoice-details__info-adres {
+    justify-self: end;
+    p {
+      text-align: right;
+    }
+  }
+  .invoice-details__table {
+    width: 100%;
+
+    thead tr,
+    tbody tr {
+      display: grid;
+      grid-template-columns: 2.5fr 0.5fr 1fr 1fr;
+      grid-template-areas: 'name qty price total';
+    }
+    th.item-name-label,
+    td.item-name {
+      grid-area: name;
+      justify-self: start;
+    }
+    th.item-qty-label,
+    td.item-qty {
+      grid-area: qty;
+      justify-self: center;
+    }
+    th.item-price-label,
+    td.item-price {
+      grid-area: price;
+      justify-self: end;
+    }
+    th.item-total-label,
+    td.item-total {
+      grid-area: total;
+      justify-self: end;
+    }
+    thead tr {
+      padding: 20px;
+      th {
+        font-weight: lighter;
+        font-size: 0.8rem;
+      }
+    }
+    tbody tr {
+      td {
+        font-weight: bold;
+        font-size: 0.9rem;
+        &:nth-child(1) {
+          grid-area: name;
+        }
+        &:nth-child(2) {
+          grid-area: qty;
+        }
+        &:nth-child(3) {
+          grid-area: price;
+        }
+        &:nth-child(4) {
+          grid-area: total;
+        }
+      }
+    }
+  }
+
+  .modal-open {
+    overflow: hidden;
+  }
+
+  div.modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
+  div.form-container {
+    flex-direction: column;
+    justify-content: normal;
+    width: 74%;
+    max-width: 616px;
+    height: 90%;
+    padding: 60px;
+    position: fixed;
+    top: 74px;
+    overflow: auto;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .invoice-form__buttons {
+    display: none;
+  }
+  div.modal-content {
+    overflow-y: auto;
+    padding-bottom: 20px;
+    padding-right: 16px;
+  }
+  div.modal-content::-webkit-scrollbar {
+    width: 4px;
+    background-color: transparent;
+    &-thumb {
+      background-color: #dfe3fa;
+      border-radius: 4px;
+    }
+    &-track {
+      background-color: transparent;
+    }
+  }
+
+  div.modal-content {
+    scrollbar-width: thin;
+    scrollbar-color: #dfe3fa transparent;
+  }
+
+  div.modal-form__buttons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+    border-top-right-radius: 10px;
+    gap: 10px;
+    box-shadow: 0 -8px 12px -4px rgba(0, 0, 0, 0.1);
+
+    button.save-button {
+      margin-right: 80px;
+    }
+  }
+  .invoice-form input,
+  div.invoice-form__payment-terms {
+    margin-left: 1px;
+  }
+
 }
